@@ -1,0 +1,187 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+
+struct Student
+{
+    int id;
+    char name[50];
+    float marks;
+};
+
+
+void addStudent()
+{
+    Student s;
+
+    ofstream file("students.txt", ios::app);
+
+    
+
+    cin.ignore(1000,'\n');
+
+    cout << "Enter Student Name: ";
+    cin.getline(s.name, 50);
+    
+    cout << "\nEnter Student ID: ";
+    cin >> s.id;
+
+    cout << "Enter Marks: ";
+    cin >> s.marks;
+
+   file<<s.name<<" ";
+   file<<s.id<<" ";
+   file<<s.marks<<endl;
+   
+   
+    file.close();
+
+    cout << "\nStudent Record Added Successfully!";
+}
+
+
+void displayStudents()
+{
+    Student s;
+
+    ifstream file("students.txt");
+
+    cout << "\n----- Student Records -----";
+
+    while (file >> s.name>> s.id>> s.marks)
+    {
+    	cout<<"\n==================================";
+        cout << "\nStudent Name: " << s.name << endl;
+        cout << "\nsudent ID : " << s.id << endl;
+        cout << "\nStudent Marks   : " << s.marks << endl;
+        cout << "\n--------------------------";
+    }
+
+    file.close();
+}
+
+void searchStudent()
+{
+    Student s;
+    int roll;
+    bool found = false;
+
+    ifstream file("students.txt");
+
+    cout << "\nEnter ID to Search: ";
+    cin >> roll;
+
+    while (file >> s.name >> s.id>> s.marks)
+    {
+        if (s.id == roll)
+        {
+            cout << "\nStudent Found!\n";
+            cout<<"\n===================================";
+            cout << "\nStudent Name : " << s.name<< endl;
+            cout << "\nStudent ID : " << s.id<< endl;
+            cout << "\nStudent Marks  : " << s.marks << endl;
+            cout<<"=========================================";
+            
+            
+            found = true;
+            break;
+        }
+    }
+
+    if (!found)
+    {
+        cout << "\nStudent Record Not Found!\n";
+    }
+
+    file.close();
+}
+
+void deleteStudent()
+{
+    Student s;
+    int r;
+    bool found = false;
+
+    ifstream file("students.txt");
+    ofstream temp("temp.txt");
+
+    cout << "\nEnter ID to Delete: ";
+    cin >> r;
+
+    while (file >> s.name >> s.id>> s.marks)
+    {
+        if (s.id!= r)
+        {
+            temp<< s.name << " ";
+            temp<< s.id << " ";
+            temp<< s.marks << endl;
+        }
+        else
+        {
+            found = true;
+        }
+    }
+
+    file.close();
+    temp.close();
+
+    remove("students.txt");
+    rename("temp.txt", "students.txt");
+
+    if (found)
+    {
+        cout << "\nStudent Record Deleted Successfully!";
+    }
+    else
+    {
+        cout << "\nStudent Record Not Found!";
+}
+
+}
+
+int main(){
+	 int choice;
+
+    do
+    {
+        cout << "\n===== STUDENT MANAGEMENT SYSTEM =====\n";
+        cout << "\n1.Add Student Record";
+        cout << "\n2.Display Students Record";
+        cout << "\n3.Search Student Record";
+        cout << "\n4.Delete Student Record";
+        cout << "\n5.Exit";
+
+        cout << "\nEnter Your Choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+            case 1:
+                addStudent();
+                break;
+
+            case 2:
+                displayStudents();
+                break;
+
+            case 3:
+                searchStudent();
+                break;
+
+            case 4:
+                deleteStudent();
+                break;
+
+            case 5:
+                cout << "THANK YOU";
+                break;
+
+            default:
+                cout << "Invalid Choice!";
+        }
+
+    } while (choice != 5);
+
+    return 0;
+}
