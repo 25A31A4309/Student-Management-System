@@ -1,4 +1,4 @@
-🎓 Student Management System
+🎓 Student Management System:
 The Student Management System is a simple console-based mini project developed in C++ to manage student records efficiently using file handling and menu-driven operations. This project helps users store and maintain student information digitally in an organized way.
 The main objective of this project is to perform basic student record management operations such as adding, displaying, searching, and deleting student details. The system stores important information like Roll Number, Student Name, and Marks using file handling for permanent data storage.
 ✨ Key Features:
